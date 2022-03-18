@@ -1,5 +1,6 @@
 import logo from '../logo.svg';
 import { BrowserRouter, Switch, Route, Redirect, NavLink } from 'react-router-dom';
+import {LazyPage1,LazyPage2,LazyPage3} from '../01-lazyload/pages';
 
 export const Navigation = () => {
     return (
@@ -15,13 +16,13 @@ export const Navigation = () => {
                     <ul>
 
                         <li>
-                            <NavLink to="/home" activeClassName="nav-active" exact>Home</NavLink>
+                            <NavLink to="/lazy1" activeClassName="nav-active" exact>lazy1</NavLink>
                         </li>
                         <li>
-                            <NavLink to="/about" activeClassName="nav-active" exact>About</NavLink>
+                            <NavLink to="/lazy2" activeClassName="nav-active" exact>lazy2</NavLink>
                         </li>
                         <li>
-                            <NavLink to="/users" activeClassName="nav-active" exact>Users</NavLink>
+                            <NavLink to="/lazy3" activeClassName="nav-active" exact>lazy3</NavLink>
                         </li>
 
                     </ul>
@@ -30,14 +31,14 @@ export const Navigation = () => {
 
                 <Switch>
                 
-                    <Route path='/about'>
-                        <h1>About</h1>
+                    <Route path='/lazy1'>
+                        <LazyPage1/>
                     </Route>  
-                    <Route path='/users'>
-                        <h1>Users</h1>
+                    <Route path='/lazy2'>
+                        <LazyPage2/>
                     </Route>  
-                    <Route path='/home'>
-                        <h1>Home</h1>
+                    <Route path='/lazy3'>
+                        <LazyPage3/>
                     </Route>  
                     <Redirect to="/home"/>
 
