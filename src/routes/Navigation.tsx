@@ -25,7 +25,7 @@ export const Navigation = () => {
                                         <li
                                             key={path}
                                         >
-                                            <NavLink to={path} activeClassName="nav-active" exact>{name}</NavLink>
+                                            <NavLink to={path} activeClassName="nav-active" >{name}</NavLink>
                                         </li>
                                     )
 
@@ -59,6 +59,7 @@ export const Navigation = () => {
 
                             })
                         }
+                        <Redirect to={routes[0].path}/>
 
                         {/* <Route path='/lazy1'>
                             <LazyPage1/>
