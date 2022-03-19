@@ -1,15 +1,12 @@
-import {ReactElement} from 'react';
-import { JsxChild } from 'typescript';
+import { IProps as IProductButtons } from '../components/ProductButtons';
+import { IProps as IProductCardProps} from '../components/ProductCard';
+import { IProps as IProductImageProps } from '../components/ProductImage';
+import { IProps as IProductTitleProps} from '../components/ProductTitle';
 
-interface IProduct {
+export interface IProduct {
     id: string,
     title: string,
     img?: string
-};
-
-export interface IProducCardProps{
-    product: IProduct,
-    children?: ReactElement | ReactElement[]
 };
 
 export interface IProductContextProps {
@@ -19,8 +16,8 @@ export interface IProductContextProps {
 }
 
 export interface IProductCardHocProps{
-    ({ product, children }: IProducCardProps): JSX.Element,
-    Title: ({title}: {title?:string}) => JSX.Element,
-    Image: ({img}: {img?:string}) => JSX.Element,
-    Buttons: () => JSX.Element
+    ({ product, children }: IProductCardProps): JSX.Element,
+    Title: (Props: IProductTitleProps ) => JSX.Element,
+    Image: (Props: IProductImageProps) => JSX.Element,
+    Buttons: (Props:IProductButtons) => JSX.Element
 }
