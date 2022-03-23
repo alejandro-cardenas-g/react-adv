@@ -10,7 +10,6 @@ export interface IProps {
 export const ProductButtons = ({className, style}:IProps) => {
 
     const {increaseBy, counter} = useContext(productContext);
-
     return (
 
         <div className={`${styles.buttonsContainer} ${className && className}` }
