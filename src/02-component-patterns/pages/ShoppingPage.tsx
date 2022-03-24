@@ -1,5 +1,4 @@
 import {ProductButtons,ProductImage,ProductTitle,ProductCard} from '../components/';
-import { useShoppingCart } from '../hooks/useShoppingCart';
 import { IProduct } from '../interfaces/ProducInterface';
 import '../styles/custom-styles.css';
 
@@ -28,74 +27,45 @@ const Products:IProduct[] = [
     }
 ];
 
-export const ShoppingPage = () => {
+const producto = Products[0];
 
-    const { shoppingCart,onProductCountChange } = useShoppingCart();
+export const ShoppingPage = () => {
 
     return (
         <div>
             <h1>ShoppingPage</h1>
             <hr/>
-
-            <div style={
-                {
-                    display: 'flex',
-                    flexDirection: 'row',
-                    flexWrap: 'wrap'
-                }
-            }>
                 
-
+            <ProductCard 
+                key={producto.id}
+                product={producto} 
+                className="bg-dark"
+                initialValues={{
+                    count: 4,
+                    maxCount: 10,
+                }}
+            >
                 {
-                    Products.map(producto => {
+                    ({count,increaseBy,isMaxCountReached,product,reset,maxCount}) => (
 
-                        return(
-                            <ProductCard 
-                                key={producto.id}
-                                product={producto} className="bg-dark"
-                                onChange={ (evento) => onProductCountChange(evento) }
-                                // value={Object.entries(shoppingCart).map(([key, product]) => {
-                                //     if(producto.id === product.id) return product.count
-                                // })[0]}
-                                value={shoppingCart[producto.id]?.count || 0}
-                            >
-                                <ProductImage className="custom-image"/>
-                                <ProductTitle className="text-white"/>
-                                <ProductButtons className="custom-botton"/>
-                            </ProductCard>
-                        )
+                        <>
+                            <ProductImage className="custom-image"/>
+                            <ProductTitle className="text-white"/>
+                            <ProductButtons className="custom-botton"/>
 
-                    })
+
+                            <button onClick={reset}>Reset</button>
+                            <button onClick={() =>increaseBy(-2)}>-2</button>
+                            {!isMaxCountReached
+                                &&<button onClick={() =>increaseBy(2)}>+2</button>
+                            }
+                            <span>{count}</span>
+                        </>
+
+                    )
                 }
 
-                <div className="shopping-cart">
-                    {
-                        Object.entries(shoppingCart).map(([key, product]) =>{ 
-
-                            return(
-                                <ProductCard 
-                                    key={key}
-                                    product={product} className="bg-dark"
-                                    style={{width: '100px'}}
-                                    onChange={ onProductCountChange }
-                                    value={ product.count }
-                                >
-                                    <ProductImage className="custom-image"/>
-                                    <ProductTitle className="text-white"/>
-                                    <ProductButtons className="custom-botton"
-                                        style={{
-                                            display:'flex',
-                                            justifyContent: 'center'
-                                        }}
-                                    />
-                                </ProductCard>
-                            )
-                        })
-                    }
-
-                </div>
-
-            </div>
+            </ProductCard>
 
         </div>
     )

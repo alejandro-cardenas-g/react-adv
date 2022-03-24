@@ -1,7 +1,7 @@
 import styles from '../styles/styles.module.css';
 import { useProduct } from '../hooks/useProduct';
-import { createContext, ReactElement } from 'react';
-import { IProductContextProps, IProduct, IOnChangeArgs} from '../interfaces/ProducInterface';
+import { createContext } from 'react';
+import { IProductContextProps, IProduct, IOnChangeArgs, IInitialValues, IProductCardHandlers } from '../interfaces/ProducInterface';
 
 export const productContext = createContext({} as IProductContextProps);
 
@@ -9,30 +9,41 @@ const { Provider } = productContext;
 
 export interface IProps{
     product: IProduct,
-    children?: ReactElement | ReactElement[],
+    // children?: ReactElement | ReactElement[],
+    children: (args: IProductCardHandlers) => JSX.Element,
     className?: string,
     style?: React.CSSProperties,
     onChange?: (args: IOnChangeArgs) => void,
-    value?: number
+    value?: number,
+    initialValues?: IInitialValues
 };
 
-export const ProductCard = ({ product, children, className, style, onChange, value}: IProps) => {
+export const ProductCard = ({ product, children, className, style, onChange, value, initialValues}: IProps) => {
 
-    const {counter, increaseBy} = useProduct( { onChange, product, value } );
+    const {counter, increaseBy, isMaxCountReached, reset} = useProduct( { onChange, product, value, initialValues } );
 
     return (
 
         <Provider value={{
             counter,
             increaseBy,
-            product
-        }}>
+            product,
+            maxCount: initialValues?.maxCount
+        }}> 
 
             <div className={ `${styles.productCard} ${(className) && className}` }
                 style={style}
             >
                 
-                {children}
+                {
+                    children({
+                        count: counter,
+                        isMaxCountReached: isMaxCountReached,
+                        product,
+                        increaseBy,
+                        reset
+                    }) 
+                }
                 {/* <ProductImage img={ product.img }/>
 
                 <ProductTitle title={ product.title } />
